@@ -1,11 +1,3 @@
-# this file will predict all the bees in a video
-# it will crop the boxes for 25% overlap
-# it filters ghost bounding boxes based on previous frames
-# it also calculates the mAP and mRecall
-
-# Example Usage
-# python37 .\predict_video.py --input .\vids\by2.mov --weights .\cfg\yolov4-bees_7000.weights 
-#            --config_file .\cfg\yolov4-bees.cfg --data_file .\cfg\obj.data --thresh 0.6 --out_filename .\ids\bypred.mov
 import cv2
 import os
 import math
@@ -30,7 +22,6 @@ def bbox2points(bbox):
     return ((xmin, ymin), (xmax, ymax))
 
 def detect_frame(frame, network, class_names, thresh):
-    # we need to fit a bunch of 416x416 frames.
     detects = []
     darknet.copy_image_from_bytes(darknet_image, frame.tobytes())
     detections = darknet.detect_image(network, class_names, darknet_image, thresh=thresh)
